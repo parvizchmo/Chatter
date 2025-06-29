@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const driverController = require("../controllers/driver_controller");
+const driverController = require("../controllers/userController");
 
 // Погода
 router.get("/weather", driverController.getWeather);

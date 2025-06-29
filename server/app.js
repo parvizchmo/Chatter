@@ -1,5 +1,5 @@
 const express = require("express");
-const driverRoutes = require("./routes/driver_routes");
+const driverRoutes = require("./routes/userRoutes");
 const port = 3000;
 const createTable = require("./initDB");
 const cors = require("cors");
