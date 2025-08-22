@@ -11,4 +11,5 @@ export const ENV={
     SENTRY_DSN:process.env.SENTRY_DSN,
     INGEST_EVENT_KEY:process.env.INGEST_EVENT_KEY,
     INVEST_SIGNING_KEY:process.env.INVEST_SIGNING_KEY,
+    NODE_ENV:process.env.NODE_ENV,
 }
