@@ -1,6 +1,16 @@
 const express = require("express");
 const driverRoutes = require("./routes/userRoutes");
 const port = 3000;
+
+//подключение sequelize к БД
+const Sequelize = require("sequelize");
+const db = require("./db");
+function t01(){
+    user.findAll().then((users) => {
+        console.log(users);
+    })
+}
+
 const createTable = require("./initDB");
 const cors = require("cors");
 const app = express();
