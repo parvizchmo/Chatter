@@ -1,37 +1,26 @@
-import { Inngest } from "inngest";
-import { connectDB } from "./db.js";
-import { User } from "../models/user.model.js"; // Import the User model
-import { addUserToPublicChannels, deleteStreamUser, upsertStreamUser } from "./stream.js";
+import {Inngest} from "inngest"
+import {connectDB} from "../db.js";
+import {User} from "../models/user.model.js";
 
-// Create a client to send and receive events
-export const inngest = new Inngest({ id: "slack-clone" });
+export const inngest = new Inngest({id: "chatter"})
 
 const syncUser = inngest.createFunction(
-    { id: "sync-user" },
-    { event: "clerk/user.created" },
-    async ({ event }) => {
-        await connectDB();
-
+    {id: "sync-user"},
+    {event: "clerk/user.created"},
+    async ({event}) => {
+        await connectDB()
         const { id, email_addresses, first_name, last_name, image_url } = event.data;
-
         const newUser = {
             clerkId: id,
             email: email_addresses[0]?.email_address,
             name: `${first_name || ""} ${last_name || ""}`,
-            image: image_url,
-        };
+            image_url: image_url,
 
-        await User.create(newUser);
-
-        await upsertStreamUser({
-            id: newUser.clerkId.toString(),
-            name: newUser.name,
-            image: newUser.image,
-        });
-
-        await addUserToPublicChannels(newUser.clerkId.toString());
+        }
+        await User.create(newUser)
+        //T
     }
-);
+)
 
 const deleteUserFromDB = inngest.createFunction(
     { id: "delete-user-from-db" },
@@ -44,6 +33,4 @@ const deleteUserFromDB = inngest.createFunction(
         await deleteStreamUser(id.toString());
     }
 );
-
-// Create an empty array where we'll export future Inngest functions
-export const functions = [syncUser, deleteUserFromDB];
+export const functions = [syncUser,deleteUserFromDB];
