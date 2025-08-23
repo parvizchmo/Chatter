@@ -11,7 +11,7 @@ app.use(clerkMiddleware()) //req.auth will be available in the req object
 
 app.use(express.json())
 
-app.use("api/inngest",serve({client:inngest,functions}))
+app.use("/api/inngest",serve({client:inngest,functions}))
 
 app.get("/", (req, res) => {
     res.send("index")
