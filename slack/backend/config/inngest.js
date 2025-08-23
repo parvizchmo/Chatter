@@ -4,7 +4,7 @@ import {User} from "../models/user.model.js";
 
 export const inngest = new Inngest({id: "chatter"})
 
-const syncUser = inngest.createFunction(
+const syncingUser = inngest.createFunction(
     {id: "sync-user"},
     {event: "clerk/user.created"},
     async ({event}) => {
@@ -23,7 +23,7 @@ const syncUser = inngest.createFunction(
 )
 
 const deleteUser = inngest.createFunction(
-    {id: "sync-user"},
+    {id: "syncing-user"},
     {event: "clerk/user.created"},
     async ({event}) => {
         await connectDB()
@@ -31,4 +31,4 @@ const deleteUser = inngest.createFunction(
         await User.deleteOne({clerkId: id})
     }
 )
-export const functions = [syncUser,deleteUser];
+export const functions = [syncingUser,deleteUser];
