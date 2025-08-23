@@ -6,7 +6,7 @@ export const inngest = new Inngest({id: "chatter"})
 
 const syncUser = inngest.createFunction(
     {id: "sync-user"},
-    {event: "webhook-integration/user.created"},
+    {event: "clerk/user.created"},
     async ({event}) => {
         await connectDB()
         const { id, email_addresses, first_name, last_name, image_url } = event.data;
