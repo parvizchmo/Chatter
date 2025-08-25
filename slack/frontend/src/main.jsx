@@ -17,12 +17,12 @@ createRoot(document.getElementById('root')).render(
     <StrictMode>
         <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
             <BrowserRouter>
-                <queryClientProvider client={queryClient}>
+                <QueryClientProvider client={queryClient}>
                     <AuthProvide>
                         <App/>
                     </AuthProvide>
                     <Toaster/>
-                </queryClientProvider>
+                </QueryClientProvider>
 
             </BrowserRouter>
         </ClerkProvider>

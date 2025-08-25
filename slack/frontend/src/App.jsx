@@ -1,33 +1,28 @@
 import React from 'react'
-import {SignedIn, SignedOut, SignInButton, UserButton} from "@clerk/clerk-react";
+import {SignedIn, SignedOut, SignInButton,} from "@clerk/clerk-react";
 import {Navigate, Route, Routes} from "react-router";
 import HomePage from "./pages/HomePage.jsx";
 import AuthPage from "./pages/AuthPage.jsx";
 import toast from "react-hot-toast";
+import {useAuth} from "@clerk/clerk-react"
+
+import CallPage from "./pages/CallPage.jsx";
 
 const App = () => {
-    return (
-        <>
 
-            <SignedIn>
-                <Routes>
+    const {isSignedIn, isLoaded} = useAuth()
+    return isLoaded && (
+        <Routes>
+            <Route path="/" element={isSignedIn ? <HomePage/> : <Navigate to={"/auth"} replace/>}/>
+            <Route path="/auth" element={!isSignedIn ? <AuthPage/> : <Navigate to={"/"} replace/>}/>
 
-                    <Route path="/" element={<HomePage/>}/>
-                    <Route path="/auth" element={<Navigate to={"/"} replace/>}/>
-                </Routes>
+            //add call page
+            <Route path="/call:/id" element={isSignedIn ? <CallPage/> : <Navigate to={"/auth"} replace/>}/>
 
-            </SignedIn>
+            <Route path="*" element={isSignedIn ? <Navigate to={"/"} replace/> : <Navigate to={"/auth"} replace/>}/>
 
-            <SignedOut>
-                <Routes>
-                    <Route path="/auth" element={<AuthPage/>}/>
-                    <Route path="*" element={<Navigate to={"/auth"} replace/>}/>
-
-                </Routes>
-                <SignInButton mode="modal"/>
-            </SignedOut>
-
-        </>
+        </Routes>
     )
 }
 export default App
+

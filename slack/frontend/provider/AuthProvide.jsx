@@ -2,7 +2,6 @@ import {createContext, useEffect} from "react";
 import {useAuth} from "@clerk/clerk-react"
 import {axiosInstance} from "../lib/axios.js";
 import toast from "react-hot-toast"
-import {interceptors} from "axios";
 
 const AuthContext = createContext({})
 
