@@ -18,7 +18,10 @@ const UsersList = ({activeChannel}) => {
                 {name: 1},
                 {limit: 20}
             )
-            return response.users
+            const usersOnly = response.users.filter((user)=>!user.id.startsWith("recording-"))
+
+            return usersOnly
+
 
         }, [client]
     );
@@ -67,7 +70,7 @@ const UsersList = ({activeChannel}) => {
 
                                 ): (
                                     <div className='w-4 h-4 rounded-full bg-gray-400 flex items-center justify-center'>
-                                        <span className='text-xs text-white'>{(user.name || user.id).charAt(0).toUpperCase()}</span>
+                                        <span className='text-xs text-white'>{user.name}</span>
                                     </div>
                                 )
                                 }
@@ -77,7 +80,7 @@ const UsersList = ({activeChannel}) => {
                             </div>
 
 
-                        <span className='str-chat__channel-preview-messenger-name truncate'>{user.name || user.id}</span>
+                        <span className='str-chat__channel-preview-messenger-name truncate'>{user.name}</span>
 
                         {unreadCount >0 && (
                             <span className='flex items-center justify-center ml-2 size-4 text-xs rounded-full bg-red-500'>{unreadCount}</span>

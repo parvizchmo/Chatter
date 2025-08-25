@@ -4,8 +4,8 @@ import {HashIcon} from "lucide-react";
 const CustomChannelPreview = ({channel,setActiveChannel,activeChannel}) => {
 
   const isActive = activeChannel && activeChannel.id === channel.id;
-/*  const isDirectMessage = channel.data.member.count ===2 && channel.data.id.includes("user_")
-    if(isDirectMessage) return null;*/
+ const isDirectMessage = channel.data.member_count ===2 && channel.data.id.includes("user_")
+    if(isDirectMessage) return null;
     const unreadCount = channel.countUnread()
     return (
         <button onClick={()=> setActiveChannel(channel)} className={`str-chat__channel-preview-messenger transition-colors flex items-center w-full text-left px-4 py-2 rounded-lg mb-1 font-medium hover:bg-blue-50/80 min-h-9 ${

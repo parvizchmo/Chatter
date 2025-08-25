@@ -17,7 +17,7 @@ const App = () => {
             <Route path="/auth" element={!isSignedIn ? <AuthPage/> : <Navigate to={"/"} replace/>}/>
 
             //add call page
-            <Route path="/call:/id" element={isSignedIn ? <CallPage/> : <Navigate to={"/auth"} replace/>}/>
+            <Route path="/call/:id" element={isSignedIn ? <CallPage/> : <Navigate to={"/auth"} replace/>}/>
 
             <Route path="*" element={isSignedIn ? <Navigate to={"/"} replace/> : <Navigate to={"/auth"} replace/>}/>
 
