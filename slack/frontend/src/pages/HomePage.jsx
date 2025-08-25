@@ -5,13 +5,14 @@ import {useStreamChat} from "../hooks/useStreamChat.js";
 import PageLoader from "../components/PageLoader.jsx";
 import "../styles/stream-chat-theme.css"
 import {Chat, Channel, ChannelList, MessageList, MessageInput, Thread, Window} from "stream-chat-react";
+import {PlusIcon} from "lucide-react";
+import CreateChannelModal from "../components/CreateChannelModal.jsx";
 
 const HomePage = () => {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [activeChannel, setActiveChannel] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
     const {chatClient, error, isLoading} = useStreamChat();
-    useStreamChat()
 
     useEffect(() => {
         //set active channel from URL
@@ -23,10 +24,10 @@ const HomePage = () => {
             }
         }
     }, [chatClient, searchParams])
-    if (error) return <p>Something went wrong <span>{error}</span></p>
-  /*  if (isLoading || !chatClient) {
+    if (error) return <p>Something went wrong: {error.message}</p>
+    if (isLoading || !chatClient) {
         return <PageLoader/>
-    }*/
+    }
     return (
         <div className='chat-wrapper'>
             <Chat client={chatClient}>
@@ -40,12 +41,43 @@ const HomePage = () => {
                                     <img src="/Logo.png" alt="Logo" className='brand-logo'/>
                                     <span className='brand-name'>Chatter</span>
                                 </div>
-                                <div className='user-button-wrapper'><UserButton/>
+                                <div className='user-button-wrapper'>
+                                    <UserButton/>
                                 </div>
+                            </div>
+                            {/*    Channels list */}
+                            <div className="team-channel-list__content">
+                                <div className="create-channel-section">
+                                    <button onClick={() => setIsCreateModalOpen(true)} className="create-channel-btn">
+                                        <PlusIcon className='size-4'/>
+                                        <span>Create channel</span>
+                                    </button>
+                                </div>
+                            {/*    Channel list*/}
+
                             </div>
                         </div>
                     </div>
+                {/*    Right container*/}
+                    <div className='chat-main'>
+                        <Channel channel={activeChannel}>
+                            <Window>
+                               {/*<CustomChannelHeader/>*/}
+                                <MessageList/>
+                                <MessageInput/>
+                            </Window>
+                            <Thread/>
+                        </Channel>
+
+                    </div>
                 </div>
+                {isCreateModalOpen && (
+
+                    <CreateChannelModal
+                        isOpen = {isCreateModalOpen}
+                        onClose={() => setIsCreateModalOpen(false)}
+                    />
+                )}
             </Chat>
 
             <p>Home page</p>
