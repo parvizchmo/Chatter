@@ -1,7 +1,7 @@
 import {Inngest} from "inngest"
 import {connectDB} from "./db.js";
 import {User} from "../models/user.model.js";
-import {upsertStreamUser } from "./stream.js";
+import {upsertStreamUser,addUserToPublicChannels } from "./stream.js";
 
 export const inngest = new Inngest({id: "chatter"})
 
@@ -28,6 +28,7 @@ const syncUser = inngest.createFunction(
             name: newUser.name,
             image: newUser.image,
         });
+        await addUserToPublicChannels(newUser.clerkId.toString())
     }
 )
 
